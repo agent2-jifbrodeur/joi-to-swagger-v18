@@ -337,6 +337,21 @@ const parseAsType = {
 
 		return swagger;
 	},
+	link: (schema) => {
+		// Handle Joi.link() for recursive schemas
+		// Get the reference from the link
+		const ref = schema.$_terms.link && schema.$_terms.link[0].ref;
+		if (!ref || !ref.key) {
+			// If no valid reference, return generic object
+			return { type: 'object' };
+		}
+
+		// Return a $ref to the linked schema
+		// The reference will be resolved in components/schemas
+		return {
+			$ref: `#/components/schemas/${ref.key}`,
+		};
+	},
 };
 
 function parse (schema, existingComponents, isSchemaOverride) {

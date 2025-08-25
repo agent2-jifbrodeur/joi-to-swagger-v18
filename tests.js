@@ -1218,4 +1218,134 @@ suite('swagger converts', (s) => {
 		)(),
 		new TypeError('myInvalidType is not a recognized Joi type.'),
 	);
+
+	// Tests for Joi.link() support
+	simpleTest(
+		'simple recursive schema with Joi.link()',
+		joi.object({
+			name: joi.string().required(),
+			children: joi.array()
+				.items(joi.link('#tree'))
+				.optional(),
+		})
+			.id('tree'),
+		{
+			type: 'object',
+			properties: {
+				name: {
+					type: 'string',
+				},
+				children: {
+					type: 'array',
+					items: {
+						$ref: '#/components/schemas/tree',
+					},
+				},
+			},
+			required: [ 'name' ],
+			additionalProperties: false,
+		},
+	);
+
+	simpleTest(
+		'complex nested structure with Joi.link()',
+		joi.object({
+			type: joi.string().required().valid('NESTED'),
+			format: joi.string()
+				.valid('BOOL', 'RADIOBUTTON', 'DROPDOWN')
+				.required(),
+			options: joi.array()
+				.items(
+					joi.object({
+						value: joi.string().required(),
+						code: joi.string().pattern(/^[A-Z0-9_]+$/),
+						fieldset: joi.array()
+							.items(joi.link('#nestedThing'))
+							.min(1),
+					}),
+				)
+				.required()
+				.min(1),
+		})
+			.id('nestedThing'),
+		{
+			type: 'object',
+			properties: {
+				type: {
+					type: 'string',
+					enum: [ 'NESTED' ],
+				},
+				format: {
+					type: 'string',
+					enum: [ 'BOOL', 'RADIOBUTTON', 'DROPDOWN' ],
+				},
+				options: {
+					type: 'array',
+					items: {
+						type: 'object',
+						properties: {
+							value: {
+								type: 'string',
+							},
+							code: {
+								type: 'string',
+								pattern: '^[A-Z0-9_]+$',
+							},
+							fieldset: {
+								type: 'array',
+								items: {
+									$ref: '#/components/schemas/nestedThing',
+								},
+								minItems: 1,
+							},
+						},
+						required: [ 'value' ],
+						additionalProperties: false,
+					},
+					minItems: 1,
+				},
+			},
+			required: [ 'type', 'format', 'options' ],
+			additionalProperties: false,
+		},
+	);
+
+	simpleTest(
+		'recursive schema with className meta',
+		joi.object({
+			label: joi.string().required(),
+			url: joi.string().uri().optional(),
+			subItems: joi.array()
+				.items(joi.link('#menuItem'))
+				.optional(),
+		})
+			.id('menuItem')
+			.meta({ className: 'MenuItem' }),
+		{
+			$ref: '#/components/schemas/MenuItem',
+		},
+		{
+			schemas: {
+				MenuItem: {
+					type: 'object',
+					properties: {
+						label: {
+							type: 'string',
+						},
+						url: {
+							type: 'string',
+						},
+						subItems: {
+							type: 'array',
+							items: {
+								$ref: '#/components/schemas/menuItem',
+							},
+						},
+					},
+					required: [ 'label' ],
+					additionalProperties: false,
+				},
+			},
+		},
+	);
 });
