@@ -1,7 +1,7 @@
 {
-  "name": "joi-to-swagger",
-  "version": "6.2.0",
-  "description": "Conversion library for transforming joi schema objects into swagger / OpenApi OAS 3.0 schema definitions.",
+  "name": "@eval-pairs/joi-to-swagger",
+  "version": "7.0.0",
+  "description": "Enhanced fork of joi-to-swagger with Joi v18 support and Joi.link() recursive schema handling.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -12,7 +12,7 @@
     "lint": "eslint ./"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=20.0.0"
   },
   "keywords": [
     "joi",
@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Twipped/joi-to-swagger.git"
+    "url": "https://github.com/agent2-jifbrodeur/joi-to-swagger-v18.git"
   },
   "author": "Jocelyn Badgley <joc@twipped.com>",
   "license": "MIT",
@@ -33,13 +33,13 @@
     "eslint-config-twipped": "~3.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
-    "joi": "^17.7.0",
+    "joi": "^18.0.0",
     "@joi/date": "^2.1.0",
     "tap": "^16.3.2",
     "tapsuite": "^2.0.1"
   },
   "peerDependencies": {
-    "joi": ">=17.1.1"
+    "joi": ">=18.0.0"
   },
   "files": [
     "index.js",
