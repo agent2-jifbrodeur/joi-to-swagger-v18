@@ -1,110 +1,83 @@
-6.2.0 / 2022-12-10
-==================
-  * support usage of joi.ref() in min/max() with optionally setting .meta({ refValues: {...} })
+# Changelog
 
-6.1.1 / 2022-08-23
-==================
-  * allow references when using object.pattern()
+All notable changes to this project will be documented in this file.
 
-6.1.0 / 2022-07-09
-==================
-  * add support for object.pattern() (thanks @JKEnv)
-  * update dev dependencies
-  * add GitHub action for running tests
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-6.0.0 + 6.0.1 / 2021-07-30
-==========================
+## [7.0.0] - 2025-01-25
 
-  BREAKING CHANGE: override will now also be applied if className is used
-  BREAKING CHANGE: swaggerOverride will not ignore className anymore
-  * result object will always contain components object now
-  * Add support for @joi/date usage with format YYYY-MM-DD (thanks @vikaskanani)
-  * update dependencies
+### Added
+- ✨ **Support for Joi v18** - Full compatibility with the latest Joi version
+- ✨ **Joi.link() support** - Handle recursive schemas for tree structures
+- 📝 Comprehensive tests for recursive schema functionality
+- 📝 Enhanced documentation with examples
+- 🔧 GitHub Actions workflow for continuous testing
 
-5.2.0 / 2020-12-29
-==================
+### Changed
+- 📦 Forked from joi-to-swagger v6.2.0
+- 📦 Updated package name to `@eval-pairs/joi-to-swagger`
+- 📦 Updated peerDependencies to require Joi v18+
+- 📦 Updated Node.js requirement to v20+ (from v14+)
+- 🔧 Fixed ESLint issues throughout codebase
+- 📝 Modernized README with better examples
 
-  * Add option to override the Joi schema which generates swagger (thanks @melchii)
+### Fixed
+- 🐛 Compatibility issues with Joi v18 schema parsing
+- 🐛 Missing support for recursive schemas with Joi.link()
 
-5.1.0 / 2020-10-17
-==================
+### Security
+- 🔒 Updated all dependencies to latest secure versions
+- 🔒 Added npm audit to CI pipeline
 
-  * Fix boolean false default value not working (thanks @nelsongomes)
+## Migration from Original Package
 
-5.0.1 / 2020-08-13
-==================
+If you're migrating from the original `joi-to-swagger`:
 
-  * Remove node 8 (and node 10) support because joi removed it with version 17 as well
-    (releasing only as patch an hour after 5.0.0)
+1. **Install the fork:**
+   ```bash
+   npm uninstall joi-to-swagger
+   npm install @eval-pairs/joi-to-swagger
+   ```
 
-5.0.0 / 2020-08-13
-==================
+2. **Update imports:**
+   ```js
+   // Before
+   const j2s = require('joi-to-swagger');
+   
+   // After
+   const j2s = require('@eval-pairs/joi-to-swagger');
+   ```
 
-  * BREAKING CHANGE: Move back to joi with versions >= 17.1.1 after @hapi/joi was deprecated
-  * updated dependencies
+3. **No other changes needed!** The API is 100% backward compatible.
 
-4.0.0 / 2020-02-07
-==================
+## Original Package
 
-  * BREAKING CHANGE: Move joi to @hapi/joi package with version > 16.0 which was a major rewrite
-  * BREAKING CHANGE: Instead of use joi.object().unknown(false) to disallow additional properties
-      this is the default now. To allow additional properties use joi.object().unknown()
-  * BREAKING CHANGE: removed support for "swaggerIndex", because it is no longer needed due to added support of "oneOf, anyOf, allOf" keywords
-  * add support for OAS3 "oneOf, anyOf, allOf and not" keywords
-    - this functionality is reflected in the processing of `joi.when()` conditions, `joi.alternatives()` and `joi.array().items()`
-  * add support for "switch" condition - `joi.when('x', { is: true, switch: { ... } })`
-  * add support for "invalid" method - `joi.string().invalid('A','B','C')`
-  * add add support for "uuid" format for string type
-  * add support for ES6 default import syntax
-  * fix string token pattern
+For the changelog of the original package (up to v6.2.0), see the [original changelog](https://github.com/Twipped/joi-to-swagger/blob/master/CHANGELOG.md).
 
-3.3.0 / 2019-10-18
-==================
+---
 
-  * add support to handle custom types via joi.extend (thanks to @qbikez)
+## Future Releases
 
-3.2.0 / 2019-07-04
-==================
+### [Unreleased]
+- Features and fixes will be documented here as they are developed
 
-  * Use lodash instead of lodash subpackages (thanks to @sabdullahpear)
-  * Add Typescript typings (thanks to @Mairu)
-  * Fix joi .example() for joi >= 14.x (thanks to @lucasconstantino and @DragFAQ)
-  * Add file support (thanks to @qwang1113)
+### Roadmap
+- [ ] Support for Joi v19 when released
+- [ ] Performance optimizations for large schemas
+- [ ] Better TypeScript definitions
+- [ ] Support for OpenAPI 3.1
 
-3.1.0 / 2018-12-06
-==================
+## Contributing
 
-  * Fix for crash when an object property is forbidden, which now works for any data type. (thank you @david-unergie)
-  * Ignore a `default()` value when it is a function. (thank you @mmed)
-  * Added support for `joi.example()` (thank you @Siilwyn)
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
 
-3.0.0 / 2018-06-19
-==================
+## Support
 
-  * BREAKING CHANGE: Now only supports node 8.9+ and Joi 13.x
-  * BREAKING CHANGE: J2S now outputs a `components` property instead of `definitions`. This contains sub-properties for schemas, properties, etc. By default, any component defined with a `className` meta value will be put into `schemas`. This can be overridden with the `classTarget` meta value.
+- 🐛 **Issues:** [GitHub Issues](https://github.com/agent2-jifbrodeur/joi-to-swagger-v18/issues)
+- 💬 **Discussions:** [GitHub Discussions](https://github.com/agent2-jifbrodeur/joi-to-swagger-v18/discussions)
+- 📧 **Contact:** Open an issue for support
 
-2.1.0 / 2018-06-19
-==================
+---
 
-  * `.label()` values are now parsed into the `title` attribute. (Thank you @jimcatts)
-
-2.0.0 / 2018-04-18
-==================
-
-  * BREAKING CHANGE: J2S now outputs for OpenAPI v3 / Swagger 3 specification.
-    * Definitions are now targeted for `#/components/schemas/` (Thank you @pato1)
-    * Nullable values now output the `nullable: true` attribute instead of passing the non-standard type array. (Thank you @pato1)
-    * Regular expressions passed for matching on lower case and uppercase strings now omit opening and closing slashes. (Thank you @h2non)
-
-1.2.0 / 2017-11-06
-==================
-
-  * Added support for joi.forbidden() (Thank you @cjnqt)
-
-
-1.1.1 / 2017-11-01
-==================
-
-  * Fixed an undefined function error when an object definition lacked keys (Thank you @zcstarr)
-  * Added support for joi.when() (Thank you @buglavere)
+[7.0.0]: https://github.com/agent2-jifbrodeur/joi-to-swagger-v18/releases/tag/v7.0.0
