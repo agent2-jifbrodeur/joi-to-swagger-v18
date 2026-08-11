@@ -1348,4 +1348,20 @@ suite('swagger converts', (s) => {
 			},
 		},
 	);
+
+	simpleTest(
+		'joi.link() without a resolvable reference falls back to generic object',
+		joi.object({
+			orphan: joi.link(),
+		}),
+		{
+			type: 'object',
+			properties: {
+				orphan: {
+					type: 'object',
+				},
+			},
+			additionalProperties: false,
+		},
+	);
 });

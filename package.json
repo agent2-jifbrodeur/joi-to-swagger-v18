@@ -33,7 +33,7 @@
     "eslint-config-twipped": "~3.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
-    "joi": "^18.0.0",
+    "joi": "^18.2.3",
     "@joi/date": "^2.1.0",
     "tap": "^16.3.2",
     "tapsuite": "^2.0.1"
@@ -46,6 +46,6 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.18.1"
   }
 }
