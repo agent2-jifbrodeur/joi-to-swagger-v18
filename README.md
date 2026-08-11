@@ -1,5 +1,33 @@
 # @eval-pairs/joi-to-swagger
 
+> ## ⚠️ ARCHIVED — use the upstream package instead
+>
+> **This fork is no longer maintained. Use [`joi-to-swagger`](https://www.npmjs.com/package/joi-to-swagger) from npm.**
+>
+> ### Why it was archived
+>
+> The premise of this fork — *"the upstream doesn't support Joi v18"* — **was never true**. Upstream declares
+> `peerDependencies: { "joi": ">=17.1.1" }`, which Joi 18 satisfies; `npm install joi-to-swagger@6.2.0 joi@18`
+> installs without a peer conflict.
+>
+> Measured on 2026-08-11 against a real consumer project: **54 Joi schemas converted, zero output difference**
+> between upstream `6.2.0` and this fork, and a full OpenAPI specification regenerated with upstream came out
+> **byte-for-byte identical** (93 paths, 39 schemas).
+>
+> Worse, the `v7.0.0` tag pointed at the **same commit as `v6.2.0`** on the remote for months, so every consumer
+> of `#v7.0.0` was actually installing upstream `6.2.0` code. Nobody ever ran this fork.
+>
+> ### What was genuinely added here
+>
+> - a `link:` handler for `Joi.link()` recursive schemas (~15 lines) — a real feature, unrelated to Joi v18
+> - `lodash` bumped to `^4.18.1`, fixing [GHSA-r5fr-rjxr-66jc](https://github.com/advisories/GHSA-r5fr-rjxr-66jc)
+>   (upstream still declares `^4.17.21`)
+> - the missing test for the `link:` handler's unresolvable-reference branch, which had been failing the
+>   100% coverage threshold since the feature landed
+>
+> Both are worth contributing upstream rather than maintaining here.
+
+
 > Fork of [joi-to-swagger](https://github.com/Twipped/joi-to-swagger) with Joi v18 support
 
 [![npm version](https://badge.fury.io/js/%40eval-pairs%2Fjoi-to-swagger.svg)](https://www.npmjs.com/package/@eval-pairs/joi-to-swagger)
